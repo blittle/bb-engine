@@ -49,15 +49,15 @@ define(["underscore", "jquery"], function(_, $) {
 		return player;
 	}
 
-	function generatePlanet() {
+	function generatePlanet(x, y) {
 		var player = {
 			img: new Image(),
 			sx: 0,
 			sy: 0,
 			sw: 300,
 			sh: 300,
-			dx: -150,
-			dy: -150,
+			dx: x,
+			dy: y,
 			dw: 200,
 			dh: 200
 		};
@@ -84,7 +84,8 @@ define(["underscore", "jquery"], function(_, $) {
 				_options);
 
 			stars = generateStars(options.width, options.height, 5);
-			entities = [generatePlanet(), getPlayer()];
+			entities = [generatePlanet(0, 0),
+						getPlayer()];
 			events = [];
 			keys = {};
 
