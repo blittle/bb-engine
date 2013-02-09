@@ -38,7 +38,7 @@ function($, Backbone, BBEngine, Layer, Stars, Entity){
             this.engine.addLayer(1, new Stars({
                 width: width,
                 height: height,
-                offsetSpeed: 3 
+                offsetSpeed: 2 
             }));
 
             this.engine.addLayer(2, new Entity({                

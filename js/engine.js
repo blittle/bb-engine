@@ -58,17 +58,10 @@ define(["underscore", "jquery", "layer"], function(_, $, Layer) {
 				$(document).off('keyup.engine');
 			},
 
-			render: function() {					
-
+			render: function() {			
 				_.each(layers, function(layer) {
 					layer.render(ctx, keys);
-				});
-
-				_.each(entities, function(e) {				
-
-					
-				});
-				
+				});				
 			}
 		};
 

@@ -16,7 +16,7 @@ define(["backbone","underscore"], function(Backbone, _) {
 		getOffset: function(keys) {
 			var x = 0,
 				y = 0,
-				speed = this.options.offsetSpeed || 4;				
+				speed = this.options.offsetSpeed || 1.5;				
 
 			for(var key in keys) {
 				if(key === "65") {

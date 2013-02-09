@@ -10,8 +10,8 @@ define(['layer', 'underscore'], function(Layer, _) {
 
 		var x, y, stars = [], itr = 1/density * 100, seed, seed2;
 
-		for(x = -1 * width; x < 2 * width; x+=itr) {
-			for(y = -1 * width; y < 2 * height; y+=itr ) {
+		for(x = -1 * width; x < width; x+=itr) {
+			for(y = -1 * width; y < height; y+=itr ) {
 				seed = (new Date().getTime() + "").substring(11) * 1;
 				seed2 = (new Date().getTime() + "").substring(11) * 1;
 
@@ -28,27 +28,32 @@ define(['layer', 'underscore'], function(Layer, _) {
 
 	return Layer.extend({
 		initialize: function() {
-			this.stars = generateStars(this.options.width, this.options.height, 3);
-		},
-		render: function(ctx, keys) {
-			var offset=this.getOffset(keys),
-				x = offset.x,
-				y = offset.y,
-				scope = this;
+			var scope = this;
+
+			this.stars = generateStars(this.options.width * 4, this.options.height * 4, 3);
+
+			this.subCanvas = document.createElement('canvas');
+			this.subCanvas.width = this.options.width * 4;
+			this.subCanvas.height = this.options.width * 4;
+
+			this.subCtx = this.subCanvas.getContext('2d');
 
 			_.each(this.stars, function(star) {
-				star.x = star.x + x;
-				star.y = star.y + y;
-
-				if(star.x < 0 || star.y < 0 || star.x > scope.options.width || star.y > scope.options.height) {
-					return;
-				}
-
-				ctx.beginPath();
-		        ctx.arc(star.x, star.y, star.r, 0, 2 * Math.PI, false);
-		        ctx.fillStyle = "#ffffff";
-		        ctx.fill();
+				scope.subCtx.beginPath();
+		        scope.subCtx.arc(star.x, star.y, star.r, 0, 2 * Math.PI, false);
+		        scope.subCtx.fillStyle = "#ffffff";
+		        scope.subCtx.fill();
 			});
+
+			this.x = 0;
+			this.y = 0;
+		},
+		render: function(ctx, keys) {
+			var offset=this.getOffset(keys);
+			this.x += offset.x;
+			this.y += offset.y;
+
+			ctx.drawImage(this.subCanvas, this.x, this.y);			
 		}
 	});
 
